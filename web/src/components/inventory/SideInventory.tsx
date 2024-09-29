@@ -11,14 +11,15 @@ const SideInventory: React.FC = () => {
         <div className="inventory-grid-special">
             <div className="inventory-grid-special-header">
                 <ShirtIcon />
-                Player Outfit
+                {/* Player Outfit */}
+                Dimencity
             </div>
             <div className="inventory-grid-special-content">
-                <SideGrid inventory={leftInventory} invType="side" />
+                {/* <SideGrid inventory={leftInventory} invType="side" /> */}
                 <div className="side-body-div">
                     <img src={BodyImage} className="side-body-div-img" />
                 </div>
-                <SideGrid inventory={leftInventory} invType="side" />
+                {/* <SideGrid inventory={leftInventory} invType="side" /> */}
             </div>
         </div>
     );
