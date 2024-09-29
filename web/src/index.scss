@@ -7,10 +7,10 @@ $secondaryColorHighlight: #33343F;
 $secondaryColorLight: rgba(0, 0, 0, 0.5);
 $secondaryColorDark: rgba(12, 12, 12, 0.8);
 
-$gridCols: 5;
-$gridRows: 5;
+$gridCols: 6;
+$gridRows: 6;
 $gridSize: 10.2vh;
-$gridGap: 2px;
+$gridGap: 3px;
 $containerSize: calc(#{$gridRows} * #{$gridSize + 0.22vh} + #{$gridRows} * #{$gridGap});
 
 body {
@@ -118,11 +118,11 @@ button:active {
 .inventory-wrapper {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  justify-content: space-evenly;
+  align-items: start;
   height: 100%;
-
-  gap: 20px;
+  padding-top: 10vh;
+  gap: 35px;
 }
 
 .inventory-control {
@@ -265,9 +265,9 @@ button:active {
 .inventory-grid-header-wrapper {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: end;
   p {
-    font-size: 16px;
+    font-size: 14px;
   }
 }
 
@@ -280,15 +280,79 @@ button:active {
   overflow-y: scroll;
 }
 
+.inventory-grid-container-right {
+  display: grid;
+  height: calc(#{$gridRows - 3} * #{$gridSize - 0.22vh} + #{$gridRows} * #{$gridGap});
+  grid-template-columns: repeat($gridCols - 1, $gridSize);
+  grid-auto-rows: $gridSize + 0.22vh;
+  gap: $gridGap;
+  overflow-y: scroll;
+}
+
+.inventory-grid-container-side {
+  display: grid;
+  height: calc(7 * #{8 + 0.42vh} + 7 * #{$gridGap});
+  grid-template-columns: repeat(1, $gridSize - 2);
+  grid-auto-rows: ($gridSize - 2) + 0.22vh;
+  gap: $gridGap;
+  overflow-y: scroll;
+}
+
+.inventory-grid-special {
+  flex-direction: column;
+  display: flex;
+  gap: 30px;
+}
+
+.inventory-grid-special-header {
+  display: flex;
+  gap: 12px;
+  width: auto;
+}
+
+.inventory-grid-special-content {
+  flex-direction: row;
+  display: flex;
+  gap: 20px;
+}
+
+.inventory-grid-special-final {
+  display: flex;
+  flex-direction: column;
+  gap: 5vh;
+  align-items: center;
+}
+
+.side-body-div-img {
+  width: 12vw;
+}
+
+.side-body-div {
+  display: flex;
+  align-items: center;
+}
+
+.special-header-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  width: 100%;
+}
+
+.header-icon-spl {
+  border: 2px solid red;
+  padding: 5px;
+}
+
 // inventory slots
 .inventory-slot {
   background-color: $secondaryColor;
   background-repeat: no-repeat;
   background-position: center;
-  border-radius: 2.5%;
+  border-radius: 10%;
   image-rendering: -webkit-optimize-contrast;
   position: relative;
-  background-size: 7vh;
+  background-size: 6vh;
   color: $textColor;
   border-color: rgba(0, 0, 0, 0.2);
   border-style: inset;

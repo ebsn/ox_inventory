@@ -5,10 +5,11 @@ import InventorySlot from './InventorySlot';
 import { getTotalWeight } from '../../helpers';
 import { useAppSelector } from '../../store';
 import { useIntersection } from '../../hooks/useIntersection';
+import ShirtIcon from '../utils/icons/ShirtIcon';
 
 const PAGE_SIZE = 30;
 
-const InventoryGrid: React.FC<{ inventory: Inventory }> = ({ inventory }) => {
+const InventoryGrid: React.FC<{ inventory: Inventory, invType: string }> = ({ inventory, invType }) => {
   const weight = useMemo(
     () => (inventory.maxWeight !== undefined ? Math.floor(getTotalWeight(inventory.items) * 1000) / 1000 : 0),
     [inventory.maxWeight, inventory.items]
@@ -25,31 +26,36 @@ const InventoryGrid: React.FC<{ inventory: Inventory }> = ({ inventory }) => {
   }, [entry]);
   return (
     <>
-      <div className="inventory-grid-wrapper" style={{ pointerEvents: isBusy ? 'none' : 'auto' }}>
-        <div>
-          <div className="inventory-grid-header-wrapper">
-            <p>{inventory.label}</p>
-            {inventory.maxWeight && (
-              <p>
-                {weight / 1000}/{inventory.maxWeight / 1000}kg
-              </p>
-            )}
+      <div className="inventory-grid-special">
+        <div className="inventory-grid-special-header">
+          <div className='special-header-icon-div'><ShirtIcon /></div>
+          <div className='special-header-info'>
+            {inventory.label}
+            <div className="inventory-grid-header-wrapper">
+              {inventory.maxWeight && (
+                <p>
+                  {weight / 1000}/{inventory.maxWeight / 1000}kg
+                </p>
+              )}
+            </div>
+            <WeightBar percent={inventory.maxWeight ? (weight / inventory.maxWeight) * 100 : 0} />
           </div>
-          <WeightBar percent={inventory.maxWeight ? (weight / inventory.maxWeight) * 100 : 0} />
         </div>
-        <div className="inventory-grid-container" ref={containerRef}>
-          <>
-            {inventory.items.slice(0, (page + 1) * PAGE_SIZE).map((item, index) => (
-              <InventorySlot
-                key={`${inventory.type}-${inventory.id}-${item.slot}`}
-                item={item}
-                ref={index === (page + 1) * PAGE_SIZE - 1 ? ref : null}
-                inventoryType={inventory.type}
-                inventoryGroups={inventory.groups}
-                inventoryId={inventory.id}
-              />
-            ))}
-          </>
+        <div className="inventory-grid-wrapper" style={{ pointerEvents: isBusy ? 'none' : 'auto' }}>
+          <div className={invType ? `inventory-grid-container-${invType}` : 'inventory-grid-container'} ref={containerRef}>
+            <>
+              {inventory.items.slice(0, (page + 1) * PAGE_SIZE).map((item, index) => (
+                <InventorySlot
+                  key={`${inventory.type}-${inventory.id}-${item.slot}`}
+                  item={item}
+                  ref={index === (page + 1) * PAGE_SIZE - 1 ? ref : null}
+                  inventoryType={inventory.type}
+                  inventoryGroups={inventory.groups}
+                  inventoryId={inventory.id}
+                />
+              ))}
+            </>
+          </div>
         </div>
       </div>
     </>
